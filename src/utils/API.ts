@@ -7,18 +7,20 @@ interface RequestConfig {
   baseUrl?: string;
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
   params?: Record<string, unknown>;
+  headers?: Record<string, unknown>;
 }
 
 export const API = {
   request: (config: RequestConfig) => {
-    const { baseUrl = '', method = 'GET', url, params } = config;
+    const { baseUrl = import.meta.env.VITE_API_DOMAIN, method = 'GET', url, params, headers } = config;
     const token = Cookies.get(CK_JWT_TOKEN);
     const requestConfig: AxiosRequestConfig = {
       url: `${baseUrl}${url}`,
       method,
       headers: {
         'Content-Type': 'application/json',
-        Authorization: token ? `Bearer ${token}` : undefined
+        Authorization: token ? `Bearer ${token}` : undefined,
+        ...headers
       },
       data: method !== 'GET' ? params : undefined,
       params
@@ -29,7 +31,7 @@ export const API = {
         return response.data;
       })
       .catch((e) => {
-        return e;
+        return Promise.reject(e?.response?.data || e);
       });
   }
 };

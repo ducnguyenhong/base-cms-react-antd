@@ -3,7 +3,9 @@ import { Route, Routes } from 'react-router-dom';
 import MainLayout from 'src/layouts/main';
 import NotFound404 from 'src/pages/404';
 import { CategoryList } from 'src/pages/category';
+import Dashboard from 'src/pages/dashboard';
 import Login from 'src/pages/login';
+import NewOrders from 'src/pages/new-order';
 
 const AppRoute = () => {
   return (
@@ -11,6 +13,15 @@ const AppRoute = () => {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route element={<MainLayout />}>
+          <Route index element={<Dashboard />} />
+
+          <Route path="new-orders">
+            <Route path="" element={<NewOrders />} />
+            {/* <Route path="create" element={<UserCreate />} />
+            <Route path="edit/:id" element={<UserCreate />} />
+            <Route path="detail/:id/*" element={<UserDetail />} /> */}
+          </Route>
+
           <Route path="categories">
             <Route path="" element={<CategoryList />} />
             {/* <Route path="create" element={<UserCreate />} />

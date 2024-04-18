@@ -8,7 +8,7 @@ const MenuLayout: React.FC = () => {
   return (
     <Menu
       className="pt-3"
-      defaultSelectedKeys={['new-orders']}
+      // defaultSelectedKeys={['new-orders']}
       defaultOpenKeys={['order-list', 'product-list']}
       mode="inline"
       items={menuItems}

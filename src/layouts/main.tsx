@@ -1,9 +1,10 @@
 import { Button, Image, Layout, theme } from 'antd';
 import { useState } from 'react';
 import { HiChevronDoubleLeft, HiChevronDoubleRight } from 'react-icons/hi';
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate, Outlet } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import Logo from 'src/assets/logo.png';
+import { useQueryUserInfo } from 'src/services/auth.service';
 import { tokenState } from 'src/states/common';
 import { WEBSITE_NAME } from 'src/utils/resource';
 import packageJson from '../../package.json';
@@ -18,9 +19,14 @@ const MainLayout: React.FC = () => {
     token: { colorBgContainer, borderRadiusLG }
   } = theme.useToken();
   const token = useRecoilValue(tokenState);
+  const { isLoading } = useQueryUserInfo();
 
   if (!token) {
     return <Navigate to="/login" />;
+  }
+
+  if (isLoading) {
+    return <p>loading...</p>;
   }
 
   return (
@@ -28,10 +34,12 @@ const MainLayout: React.FC = () => {
       <Sider trigger={null} collapsible collapsed={collapsed} width={280} className="relative">
         <div className="flex items-center justify-between py-5 pl-5 pr-2 ">
           {!collapsed && (
-            <div className="flex items-center gap-2">
-              <Image src={Logo} alt="logo" width={30} height={30} />
-              <p className="text-[#e6e6e6] font-semibold text-lg">{WEBSITE_NAME}</p>
-            </div>
+            <Link to="/">
+              <div className="flex items-center gap-3">
+                <Image src={Logo} alt="logo" width={30} height={30} />
+                <p className="text-[#e6e6e6] font-semibold text-xl">{WEBSITE_NAME}</p>
+              </div>
+            </Link>
           )}
 
           <Button type="text" onClick={() => setCollapsed(!collapsed)}>
@@ -61,7 +69,7 @@ const MainLayout: React.FC = () => {
             borderRadius: borderRadiusLG
           }}
         >
-          Content
+          <Outlet />
         </Content>
       </Layout>
     </Layout>
