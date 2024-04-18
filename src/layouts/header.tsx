@@ -7,7 +7,7 @@ const { Header: AntdHeader } = Layout;
 
 const Header: React.FC = () => {
   return (
-    <AntdHeader className="bg-white px-5 flex items-center justify-between">
+    <AntdHeader className="bg-white px-7 flex items-center justify-between">
       <Breadcrumb />
 
       <UserButton />

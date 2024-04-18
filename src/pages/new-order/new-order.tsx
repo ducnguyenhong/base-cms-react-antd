@@ -1,5 +1,5 @@
 const NewOrders: React.FC = () => {
-  return <div>Table NewOrders</div>;
+  return <div>Xem mẫu tại Category</div>;
 };
 
 export default NewOrders;

@@ -40,37 +40,100 @@ export const menuItems: MenuProps['items'] = [
   getMenuItem('Quản lý feedback', 'feedbacks', <MdFeedback />)
 ];
 
-export const MENU_ROUTES: { key: string; route: string }[] = [
+interface MenuRoute {
+  key: string;
+  route: string;
+  breadcrumb: { title: string; route: string }[];
+  section: string;
+}
+
+export const MENU_ROUTES: MenuRoute[] = [
   {
     key: 'new-orders',
-    route: '/new-orders'
+    route: '/new-orders',
+    breadcrumb: [
+      {
+        title: 'Đơn hàng mới',
+        route: '/new-orders'
+      }
+    ],
+    section: 'Đơn hàng mới'
   },
   {
     key: 'completed-orders',
-    route: '/completed-orders'
+    route: '/completed-orders',
+    breadcrumb: [
+      {
+        title: 'Đơn hàng đã hoàn thành',
+        route: '/completed-orders'
+      }
+    ],
+    section: 'Đơn hàng đã hoàn thành'
   },
   {
     key: 'products',
-    route: '/products'
+    route: '/products',
+    breadcrumb: [
+      {
+        title: 'Danh sách sản phẩm',
+        route: '/products'
+      }
+    ],
+    section: 'Danh sách sản phẩm'
   },
   {
     key: 'backgrounds',
-    route: '/backgrounds'
+    route: '/backgrounds',
+    breadcrumb: [
+      {
+        title: 'Danh sách background',
+        route: '/backgrounds'
+      }
+    ],
+    section: 'Danh sách background'
   },
   {
     key: 'stickers',
-    route: '/stickers'
+    route: '/stickers',
+    breadcrumb: [
+      {
+        title: 'Danh sách sticker',
+        route: '/stickers'
+      }
+    ],
+    section: 'Danh sách sticker'
   },
   {
     key: 'categories',
-    route: '/categories'
+    route: '/categories',
+    breadcrumb: [
+      {
+        title: 'Danh sách danh mục',
+        route: '/categories'
+      }
+    ],
+    section: 'Danh sách danh mục'
   },
   {
     key: 'news',
-    route: '/news'
+    route: '/news',
+    breadcrumb: [
+      {
+        title: 'Danh sách tin tức',
+        route: '/news'
+      }
+    ],
+    section: 'Danh sách tin tức'
   },
   {
     key: 'feedbacks',
-    route: '/feedbacks'
+    route: '/feedbacks',
+    breadcrumb: [
+      {
+        title: 'Danh sách feedback',
+        route: '/feedbacks'
+      }
+    ],
+    section: 'Danh sách feedback'
   }
 ];

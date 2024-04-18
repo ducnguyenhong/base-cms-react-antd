@@ -1,13 +1,14 @@
 import { Button, Image, Layout, theme } from 'antd';
 import { useState } from 'react';
 import { HiChevronDoubleLeft, HiChevronDoubleRight } from 'react-icons/hi';
-import { Link, Navigate, Outlet } from 'react-router-dom';
+import { Link, Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import Logo from 'src/assets/logo.png';
 import { useQueryUserInfo } from 'src/services/auth.service';
 import { tokenState } from 'src/states/common';
 import { WEBSITE_NAME } from 'src/utils/resource';
 import packageJson from '../../package.json';
+import { MENU_ROUTES } from './components/helper';
 import Header from './header';
 import MenuLayout from './menu';
 
@@ -20,6 +21,9 @@ const MainLayout: React.FC = () => {
   } = theme.useToken();
   const token = useRecoilValue(tokenState);
   const { isLoading } = useQueryUserInfo();
+  const { pathname } = useLocation();
+  const currentRoute = MENU_ROUTES.find((i) => i.route === pathname);
+  const { section } = currentRoute || {};
 
   if (!token) {
     return <Navigate to="/login" />;
@@ -36,7 +40,7 @@ const MainLayout: React.FC = () => {
           {!collapsed && (
             <Link to="/">
               <div className="flex items-center gap-3">
-                <Image src={Logo} alt="logo" width={30} height={30} />
+                <Image src={Logo} alt="logo" width={30} height={30} preview={false} />
                 <p className="text-[#e6e6e6] font-semibold text-xl">{WEBSITE_NAME}</p>
               </div>
             </Link>
@@ -62,14 +66,19 @@ const MainLayout: React.FC = () => {
         <Header />
         <Content
           style={{
-            margin: '24px 16px',
-            padding: 24,
-            minHeight: 280,
+            margin: '25px',
+            minHeight: 400,
             background: colorBgContainer,
             borderRadius: borderRadiusLG
           }}
         >
-          <Outlet />
+          <div className="border-b border-b-gray-200 py-4 px-5 flex items-center gap-3">
+            <div className="w-[2px] h-[15px] bg-[#3699ff]" />
+            <h2 className="font-bold uppercase mt-0.5">{section}</h2>
+          </div>
+          <div className="p-5">
+            <Outlet />
+          </div>
         </Content>
       </Layout>
     </Layout>

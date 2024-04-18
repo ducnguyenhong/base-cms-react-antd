@@ -3,10 +3,12 @@ import Img404 from 'src/assets/404.png';
 
 const NotFound404 = () => {
   return (
-    <div>
-      <p>Trang không tồn tại</p>
+    <div className="flex flex-col items-center gap-5 pt-20">
+      <p className="font-semibold text-2xl">Trang mà bạn truy cập không tồn tại!</p>
 
-      <Image src={Img404} alt="404" />
+      <div className="w-[40%]">
+        <Image src={Img404} alt="404" preview={false} />
+      </div>
     </div>
   );
 };
