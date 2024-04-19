@@ -2,11 +2,11 @@ import clsx from 'clsx';
 import { Fragment, memo } from 'react';
 import { IoChevronForwardOutline, IoHome } from 'react-icons/io5';
 import { Link, useLocation } from 'react-router-dom';
-import { MENU_ROUTES } from './helper';
+import { useGetCurrentRoute } from './helper';
 
 const Breadcrumb: React.FC = () => {
   const { pathname } = useLocation();
-  const currentRoute = MENU_ROUTES.find((i) => i.route === pathname);
+  const currentRoute = useGetCurrentRoute();
 
   if (!currentRoute) {
     return null;

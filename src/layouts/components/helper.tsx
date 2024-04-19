@@ -1,10 +1,11 @@
 import { MenuProps } from 'antd';
 import { BiSolidCategory } from 'react-icons/bi';
 import { FaRegMoneyBillAlt, FaUserFriends } from 'react-icons/fa';
-import { FaMoneyBill, FaNewspaper, FaProductHunt } from 'react-icons/fa6';
+import { FaMoneyBill, FaNewspaper, FaPalette, FaProductHunt } from 'react-icons/fa6';
 import { MdFeedback } from 'react-icons/md';
 import { PiSelectionBackgroundBold } from 'react-icons/pi';
 import { RiEmojiStickerFill } from 'react-icons/ri';
+import { useLocation } from 'react-router-dom';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -25,6 +26,7 @@ const getMenuItem = (
 };
 
 export const menuItems: MenuProps['items'] = [
+  getMenuItem('Bảng điều khiển', 'dashboard', <FaPalette />),
   getMenuItem('Đơn hàng', 'order-list', <FaMoneyBill />, [
     getMenuItem('Đơn hàng mới', 'new-orders', <FaMoneyBill />),
     getMenuItem('Đơn hàng hoàn thành', 'completed-orders', <FaRegMoneyBillAlt />)
@@ -48,6 +50,12 @@ interface MenuRoute {
 }
 
 export const MENU_ROUTES: MenuRoute[] = [
+  {
+    key: 'dashboard',
+    route: '/',
+    breadcrumb: [],
+    section: 'Bảng điều khiển'
+  },
   {
     key: 'new-orders',
     route: '/new-orders',
@@ -75,7 +83,7 @@ export const MENU_ROUTES: MenuRoute[] = [
     route: '/products',
     breadcrumb: [
       {
-        title: 'Danh sách sản phẩm',
+        title: 'Sản phẩm',
         route: '/products'
       }
     ],
@@ -86,7 +94,7 @@ export const MENU_ROUTES: MenuRoute[] = [
     route: '/backgrounds',
     breadcrumb: [
       {
-        title: 'Danh sách background',
+        title: 'Background',
         route: '/backgrounds'
       }
     ],
@@ -97,7 +105,7 @@ export const MENU_ROUTES: MenuRoute[] = [
     route: '/stickers',
     breadcrumb: [
       {
-        title: 'Danh sách sticker',
+        title: 'Sticker',
         route: '/stickers'
       }
     ],
@@ -108,18 +116,63 @@ export const MENU_ROUTES: MenuRoute[] = [
     route: '/categories',
     breadcrumb: [
       {
-        title: 'Danh sách danh mục',
+        title: 'Danh mục',
         route: '/categories'
       }
     ],
     section: 'Danh sách danh mục'
   },
   {
+    key: 'categories/create',
+    route: '/categories/create',
+    breadcrumb: [
+      {
+        title: 'Danh mục',
+        route: '/categories'
+      },
+      {
+        title: 'Tạo danh mục',
+        route: '/categories/create'
+      }
+    ],
+    section: 'Tạo danh mục'
+  },
+  {
+    key: 'categories/:id/edit',
+    route: '/categories/:id/edit',
+    breadcrumb: [
+      {
+        title: 'Danh mục',
+        route: '/categories'
+      },
+      {
+        title: 'Cập nhật danh mục',
+        route: '/categories/:id/edit'
+      }
+    ],
+    section: 'Cập nhật danh mục'
+  },
+  {
+    key: 'categories/:id/detail',
+    route: '/categories/:id/detail',
+    breadcrumb: [
+      {
+        title: 'Danh mục',
+        route: '/categories'
+      },
+      {
+        title: 'Chi tiết danh mục',
+        route: '/categories/:id/detail'
+      }
+    ],
+    section: 'Chi tiết danh mục'
+  },
+  {
     key: 'news',
     route: '/news',
     breadcrumb: [
       {
-        title: 'Danh sách tin tức',
+        title: 'Tin tức',
         route: '/news'
       }
     ],
@@ -130,10 +183,34 @@ export const MENU_ROUTES: MenuRoute[] = [
     route: '/feedbacks',
     breadcrumb: [
       {
-        title: 'Danh sách feedback',
+        title: 'Feedback',
         route: '/feedbacks'
       }
     ],
     section: 'Danh sách feedback'
   }
 ];
+
+export const useGetCurrentRoute = () => {
+  const { pathname } = useLocation();
+
+  if (pathname.includes('/edit') || pathname.includes('/detail')) {
+    const route = pathname.split('/')[1];
+    const type = pathname.split('/')[3];
+    const newPathname = `/${route}/:id/${type}`;
+    const currentRoute = MENU_ROUTES.find((i) => i.route === newPathname);
+    if (currentRoute) {
+      const { breadcrumb } = currentRoute;
+      const newBreadcrumb = breadcrumb.map((item) => {
+        if (item.route === newPathname) {
+          return { title: item.title, route: pathname };
+        }
+        return item;
+      });
+      return { ...currentRoute, breadcrumb: newBreadcrumb };
+    }
+    return MENU_ROUTES.find((i) => i.route === newPathname);
+  }
+
+  return MENU_ROUTES.find((i) => i.route === pathname);
+};

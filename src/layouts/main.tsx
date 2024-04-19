@@ -1,14 +1,15 @@
 import { Button, Image, Layout, theme } from 'antd';
 import { useState } from 'react';
 import { HiChevronDoubleLeft, HiChevronDoubleRight } from 'react-icons/hi';
-import { Link, Navigate, Outlet, useLocation } from 'react-router-dom';
+import { Link, Navigate, Outlet } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import Logo from 'src/assets/logo.png';
+import { ErrorScreen, LoadingScreen } from 'src/components/effect-screen';
 import { useQueryUserInfo } from 'src/services/auth.service';
 import { tokenState } from 'src/states/common';
 import { WEBSITE_NAME } from 'src/utils/resource';
 import packageJson from '../../package.json';
-import { MENU_ROUTES } from './components/helper';
+import { useGetCurrentRoute } from './components/helper';
 import Header from './header';
 import MenuLayout from './menu';
 
@@ -20,9 +21,8 @@ const MainLayout: React.FC = () => {
     token: { colorBgContainer, borderRadiusLG }
   } = theme.useToken();
   const token = useRecoilValue(tokenState);
-  const { isLoading } = useQueryUserInfo();
-  const { pathname } = useLocation();
-  const currentRoute = MENU_ROUTES.find((i) => i.route === pathname);
+  const { isLoading, error } = useQueryUserInfo();
+  const currentRoute = useGetCurrentRoute();
   const { section } = currentRoute || {};
 
   if (!token) {
@@ -30,12 +30,16 @@ const MainLayout: React.FC = () => {
   }
 
   if (isLoading) {
-    return <p>loading...</p>;
+    return <LoadingScreen className="h-screen" />;
+  }
+
+  if (error) {
+    return <ErrorScreen className="h-screen" message={error.message} />;
   }
 
   return (
     <Layout className="min-h-screen">
-      <Sider trigger={null} collapsible collapsed={collapsed} width={280} className="relative">
+      <Sider trigger={null} collapsible collapsed={collapsed} width={280} className="hidden md:block relative">
         <div className="flex items-center justify-between py-5 pl-5 pr-2 ">
           {!collapsed && (
             <Link to="/">
@@ -65,8 +69,8 @@ const MainLayout: React.FC = () => {
       <Layout>
         <Header />
         <Content
+          className="m-4 md:m-6"
           style={{
-            margin: '25px',
             minHeight: 400,
             background: colorBgContainer,
             borderRadius: borderRadiusLG

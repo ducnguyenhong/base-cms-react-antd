@@ -21,7 +21,7 @@ const TableAction: React.FC<TableActionProps> = ({ item, onConfirmDelete }) => {
         </div>
       </Link>
 
-      <Link to={`/categories/${id}/detail`} type="primary">
+      <Link to={`/categories/${id}/edit`} type="primary">
         <div className="w-10 h-9 rounded-md flex items-center justify-center bg-[#009dff] hover:bg-[#008ee6] duration-200">
           <FaPencilAlt size={13} color="#FFF" />
         </div>

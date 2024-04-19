@@ -23,7 +23,9 @@ export const API = {
         ...headers
       },
       data: method !== 'GET' ? params : undefined,
-      params
+      params,
+      timeout: 20000,
+      timeoutErrorMessage: 'Hệ thống không phản hồi. Vui lòng thử lại sau!'
     };
 
     return axios(requestConfig)

@@ -48,7 +48,7 @@ const UserButton: React.FC = () => {
       >
         <div className="h-full flex items-center gap-2">
           <img src={ImgUser} alt="user" className="w-7 h-7" />
-          <span className="font-semibold">{fullName}</span>
+          <span className="hidden md:block font-semibold">{fullName}</span>
         </div>
       </button>
     </Popover>

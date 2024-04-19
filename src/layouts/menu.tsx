@@ -10,7 +10,7 @@ const MenuLayout: React.FC = () => {
     <MenuStyle>
       <Menu
         className="pt-3"
-        // defaultSelectedKeys={['new-orders']}
+        defaultSelectedKeys={['dashboard']}
         defaultOpenKeys={['order-list', 'product-list']}
         mode="inline"
         items={menuItems}

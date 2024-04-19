@@ -1,55 +1,68 @@
 import { Table, TableProps } from 'antd';
 import { Link } from 'react-router-dom';
-import { CreateButton, TableAction } from 'src/components/table';
+import { ErrorScreen } from 'src/components/effect-screen';
+import { CreateButton, Pagination, TableAction } from 'src/components/table';
 import { useQueryCategoryList } from 'src/services/category.service';
 import { TableStyle } from 'src/styles/table.style';
 import { Category } from 'src/types/category.type';
+import TableFilter from './filter';
 
 const CategoryList: React.FC = () => {
   const { data: dataQuery, isLoading, error } = useQueryCategoryList();
-
-  const { data = [], pagination } = dataQuery || {};
 
   const columns: TableProps<Category>['columns'] = [
     {
       title: 'STT',
       dataIndex: 'id',
-      key: 'id',
       render: (text, _, index) => <Link to={`/categories/${text}/detail`}>{index + 1}</Link>
     },
     {
       title: 'Tiêu đề',
       dataIndex: 'title',
-      key: 'title',
-      render: (text) => (
-        <Link to={`/categories/${text}/detail`}>
+      render: (text, record) => (
+        <Link to={`/categories/${record.id}/detail`}>
           <p className="font-semibold">{text}</p>
         </Link>
       )
     },
     {
       title: 'Danh mục cha',
-      dataIndex: 'parentId',
-      key: 'parentId'
+      dataIndex: 'parentId'
     },
     {
       title: 'Đường dẫn',
-      dataIndex: 'url',
-      key: 'url'
+      dataIndex: 'url'
     },
     {
       title: 'Hành động',
-      key: 'action',
       render: (_, record) => <TableAction item={record} />
     }
   ];
+
+  const { data, pagination } = dataQuery || {};
+  const { totalItems, page } = pagination || {};
+
+  if (error) {
+    return <ErrorScreen message={error?.message} className="mt-20" />;
+  }
 
   return (
     <TableStyle>
       <div className="flex justify-end mb-5">
         <CreateButton route="/categories/create" />
       </div>
-      <Table columns={columns} dataSource={data} />
+      <TableFilter />
+      <Table
+        columns={columns}
+        dataSource={data}
+        loading={isLoading}
+        pagination={false}
+        rowKey="id"
+        scroll={{ x: 1500, scrollToFirstRowOnChange: true }}
+      />
+      <div className="flex justify-end mt-10">
+        <Pagination defaultPage={page} totalItems={totalItems} />
+      </div>
     </TableStyle>
   );
 };
