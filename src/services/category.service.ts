@@ -65,6 +65,27 @@ export const useUpdateCategory = () => {
   });
 };
 
+export const useDeleteCategory = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (params: Record<string, unknown>) => {
+      const { id } = params;
+      return API.request({
+        url: `/categories/${id}`,
+        method: 'DELETE'
+      })
+        .then(() => {
+          showToast({ type: 'success', message: 'Xoá danh mục thành công' });
+          queryClient.resetQueries({ queryKey: ['GET_CATEGORY_LIST'] });
+        })
+        .catch((e) => {
+          showToast({ type: 'error', message: `Thao tác thất bại. ${e.message}` });
+        });
+    }
+  });
+};
+
 export const useQueryCategoryDetail = (id?: string) => {
   const queryKey = ['GET_CATEGORY_DETAIL', id];
   const queryClient = useQueryClient();

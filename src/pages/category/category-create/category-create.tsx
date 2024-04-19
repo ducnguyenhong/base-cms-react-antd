@@ -1,6 +1,6 @@
 import { Button, Form, Input } from 'antd';
 import { useCallback } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { ButtonBack } from 'src/components/button';
 import { ErrorScreen, LoadingScreen } from 'src/components/effect-screen';
 import FormItemUpload from 'src/components/form/form-upload';
@@ -9,7 +9,6 @@ import { FieldType } from './type';
 
 const CategoryCreate: React.FC = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
   const { isPending: loadingCreate, mutate: createMutate } = useCreateCategory();
   const { isPending: loadingUpdate, mutate: updateMutate } = useUpdateCategory();
   const { isLoading: loadingDetail, data: categoryDetail, error: errorDetail } = useQueryCategoryDetail(id);
@@ -18,9 +17,9 @@ const CategoryCreate: React.FC = () => {
     (values: FieldType) => {
       console.log('ducnh values', values);
 
-      // createMutate(values);
+      // id ? updateMutate(values) : createMutate(values);
     },
-    [createMutate, updateMutate]
+    [createMutate, updateMutate, id]
   );
 
   if (loadingDetail) {
@@ -34,7 +33,7 @@ const CategoryCreate: React.FC = () => {
   const { title, thumbnail, parentId, url } = categoryDetail || {};
 
   return (
-    <div className="w-full md:w-[35%] mx-auto">
+    <div className="w-full md:w-[60%] lg:w-[50%] 2xl:w-[35%] mx-auto">
       <Form
         name="loginForm"
         labelCol={{ span: 24 }}

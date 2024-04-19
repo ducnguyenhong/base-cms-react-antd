@@ -13,9 +13,9 @@ const UserButton: React.FC = () => {
 
   const popoverContent = (
     <div className="w-80 rounded-sm overflow-hidden">
-      <div className="bg-[#009BFC] flex items-center gap-3 px-4 py-3">
+      <div className="bg-[#1e3b57] flex items-center gap-3 px-4 py-3">
         <img src={ImgUser} alt="user" className="w-10 h-10" />
-        <span className="font-semibold text-lg text-white">{fullName}</span>
+        <span className="font-semibold text-white">{fullName}</span>
       </div>
       <div className="px-4 py-6">
         <Button
@@ -42,15 +42,17 @@ const UserButton: React.FC = () => {
       open={open}
       onOpenChange={(data) => setOpen(data)}
     >
-      <button
-        type="button"
-        className="h-12 rounded-xl border border-gray-200 bg-gray-100 px-4 hover:bg-gray-50 duration-200"
-      >
-        <div className="h-full flex items-center gap-2">
-          <img src={ImgUser} alt="user" className="w-7 h-7" />
-          <span className="hidden md:block font-semibold">{fullName}</span>
-        </div>
-      </button>
+      <div className="flex items-center">
+        <button
+          type="button"
+          className="lg:h-12 rounded-full lg:rounded-xl border border-gray-200 bg-gray-100 lg:px-4 hover:bg-gray-50 duration-200"
+        >
+          <div className="h-full flex items-center gap-2">
+            <img src={ImgUser} alt="user" className="w-8 h-8" />
+            <span className="hidden lg:block font-semibold">{fullName}</span>
+          </div>
+        </button>
+      </div>
     </Popover>
   );
 };

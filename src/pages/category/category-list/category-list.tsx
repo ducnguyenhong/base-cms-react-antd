@@ -1,10 +1,11 @@
 import { Table, TableProps } from 'antd';
 import { Link } from 'react-router-dom';
 import { ErrorScreen } from 'src/components/effect-screen';
-import { CreateButton, Pagination, TableAction } from 'src/components/table';
+import { CreateButton, Pagination } from 'src/components/table';
 import { useQueryCategoryList } from 'src/services/category.service';
 import { TableStyle } from 'src/styles/table.style';
 import { Category } from 'src/types/category.type';
+import Action from './action';
 import TableFilter from './filter';
 
 const CategoryList: React.FC = () => {
@@ -35,7 +36,7 @@ const CategoryList: React.FC = () => {
     },
     {
       title: 'Hành động',
-      render: (_, record) => <TableAction item={record} />
+      render: (_, record) => <Action item={record} />
     }
   ];
 

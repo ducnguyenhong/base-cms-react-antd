@@ -7,9 +7,10 @@ import { Link } from 'react-router-dom';
 interface TableActionProps {
   item: { id: string };
   onConfirmDelete?: (id: string) => void;
+  loadingConfirm?: boolean;
 }
 
-const TableAction: React.FC<TableActionProps> = ({ item, onConfirmDelete }) => {
+const TableAction: React.FC<TableActionProps> = ({ item, onConfirmDelete, loadingConfirm }) => {
   const { id } = item || {};
   const [showDelete, setShowDelete] = useState<boolean>(false);
 
@@ -40,6 +41,7 @@ const TableAction: React.FC<TableActionProps> = ({ item, onConfirmDelete }) => {
         open={showDelete}
         cancelText="Huỷ bỏ"
         okText="Xác nhận"
+        okButtonProps={{ danger: true, loading: loadingConfirm }}
         onOk={() => {
           onConfirmDelete && onConfirmDelete(id);
           setShowDelete(false);

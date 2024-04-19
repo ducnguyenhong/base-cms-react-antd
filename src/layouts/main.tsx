@@ -1,5 +1,6 @@
 import { Button, Image, Layout, theme } from 'antd';
 import { useState } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { HiChevronDoubleLeft, HiChevronDoubleRight } from 'react-icons/hi';
 import { Link, Navigate, Outlet } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
@@ -11,6 +12,7 @@ import { WEBSITE_NAME } from 'src/utils/resource';
 import packageJson from '../../package.json';
 import { useGetCurrentRoute } from './components/helper';
 import Header from './header';
+import HeaderMobile from './header-mobile';
 import MenuLayout from './menu';
 
 const { Sider, Content } = Layout;
@@ -39,7 +41,7 @@ const MainLayout: React.FC = () => {
 
   return (
     <Layout className="min-h-screen">
-      <Sider trigger={null} collapsible collapsed={collapsed} width={280} className="hidden md:block relative">
+      <Sider trigger={null} collapsible collapsed={collapsed} width={280} className="hidden lg:block relative">
         <div className="flex items-center justify-between py-5 pl-5 pr-2 ">
           {!collapsed && (
             <Link to="/">
@@ -66,7 +68,9 @@ const MainLayout: React.FC = () => {
           </div>
         )}
       </Sider>
+
       <Layout>
+        <HeaderMobile />
         <Header />
         <Content
           className="m-4 md:m-6"
@@ -81,7 +85,11 @@ const MainLayout: React.FC = () => {
             <h2 className="font-bold uppercase mt-0.5">{section}</h2>
           </div>
           <div className="p-5">
-            <Outlet />
+            <ErrorBoundary
+              FallbackComponent={({ error }) => <ErrorScreen className="mt-20" message={error?.message} />}
+            >
+              <Outlet />
+            </ErrorBoundary>
           </div>
         </Content>
       </Layout>

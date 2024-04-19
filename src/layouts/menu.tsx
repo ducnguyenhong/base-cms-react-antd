@@ -3,7 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { MENU_ROUTES, menuItems } from './components/helper';
 
-const MenuLayout: React.FC = () => {
+interface Props {
+  onMenuItemClick?: () => void;
+}
+
+const MenuLayout: React.FC<Props> = ({ onMenuItemClick }) => {
   const navigate = useNavigate();
 
   return (
@@ -16,6 +20,7 @@ const MenuLayout: React.FC = () => {
         items={menuItems}
         theme="dark"
         onClick={(e) => {
+          onMenuItemClick && onMenuItemClick();
           const menu = MENU_ROUTES.find((i) => i.key === e.key);
           !!menu && navigate(menu.route);
         }}

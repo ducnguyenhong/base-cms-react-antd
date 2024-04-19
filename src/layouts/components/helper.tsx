@@ -53,7 +53,12 @@ export const MENU_ROUTES: MenuRoute[] = [
   {
     key: 'dashboard',
     route: '/',
-    breadcrumb: [],
+    breadcrumb: [
+      {
+        title: 'Bảng điều khiển',
+        route: '/'
+      }
+    ],
     section: 'Bảng điều khiển'
   },
   {

@@ -1,5 +1,5 @@
 const Dashboard: React.FC = () => {
-  return <p>Dashboard</p>;
+  return <p>Xem mẫu tại Category</p>;
 };
 
 export default Dashboard;
