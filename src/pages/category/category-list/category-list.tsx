@@ -1,10 +1,12 @@
 import { Table, TableProps } from 'antd';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { ErrorScreen } from 'src/components/effect-screen';
 import { CreateButton, Pagination } from 'src/components/table';
 import { useQueryCategoryList } from 'src/services/category.service';
 import { TableStyle } from 'src/styles/table.style';
 import { Category } from 'src/types/category.type';
+import { WEBSITE_NAME } from 'src/utils/resource';
 import Action from './action';
 import TableFilter from './filter';
 
@@ -49,6 +51,10 @@ const CategoryList: React.FC = () => {
 
   return (
     <TableStyle>
+      <Helmet>
+        <title>Danh sách danh mục | {WEBSITE_NAME}</title>
+      </Helmet>
+
       <div className="flex justify-end mb-5">
         <CreateButton route="/categories/create" />
       </div>

@@ -1,10 +1,12 @@
 import { Button, Form, Input } from 'antd';
 import { useCallback } from 'react';
+import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 import { ButtonBack } from 'src/components/button';
 import { ErrorScreen, LoadingScreen } from 'src/components/effect-screen';
 import FormItemUpload from 'src/components/form/form-upload';
 import { useCreateCategory, useQueryCategoryDetail, useUpdateCategory } from 'src/services/category.service';
+import { WEBSITE_NAME } from 'src/utils/resource';
 import { FieldType } from './type';
 
 const CategoryCreate: React.FC = () => {
@@ -34,6 +36,12 @@ const CategoryCreate: React.FC = () => {
 
   return (
     <div className="w-full md:w-[60%] lg:w-[50%] 2xl:w-[35%] mx-auto">
+      <Helmet>
+        <title>
+          {id ? 'Tạo' : 'Cập nhật'} danh mục | {WEBSITE_NAME}
+        </title>
+      </Helmet>
+
       <Form
         name="loginForm"
         labelCol={{ span: 24 }}

@@ -2,9 +2,6 @@ import { MenuProps } from 'antd';
 import { BiSolidCategory } from 'react-icons/bi';
 import { FaRegMoneyBillAlt, FaUserFriends } from 'react-icons/fa';
 import { FaMoneyBill, FaNewspaper, FaPalette, FaProductHunt } from 'react-icons/fa6';
-import { MdFeedback } from 'react-icons/md';
-import { PiSelectionBackgroundBold } from 'react-icons/pi';
-import { RiEmojiStickerFill } from 'react-icons/ri';
 import { useLocation } from 'react-router-dom';
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -32,14 +29,11 @@ export const menuItems: MenuProps['items'] = [
     getMenuItem('Đơn hàng hoàn thành', 'completed-orders', <FaRegMoneyBillAlt />)
   ]),
   getMenuItem('Quản lý sản phẩm', 'product-list', <FaProductHunt />, [
-    getMenuItem('Danh sách sản phẩm', 'products', <FaProductHunt />),
-    getMenuItem('Danh sách background', 'backgrounds', <PiSelectionBackgroundBold />),
-    getMenuItem('Danh sách sticker', 'stickers', <RiEmojiStickerFill />)
+    getMenuItem('Sản phẩm', 'products', <FaProductHunt />),
+    getMenuItem('Danh mục', 'categories', <BiSolidCategory />)
   ]),
-  getMenuItem('Quản lý danh mục', 'categories', <BiSolidCategory />),
   getMenuItem('Danh sách khách hàng', 'customers', <FaUserFriends />),
-  getMenuItem('Danh sách tin tức', 'news', <FaNewspaper />),
-  getMenuItem('Quản lý feedback', 'feedbacks', <MdFeedback />)
+  getMenuItem('Danh sách tin tức', 'news', <FaNewspaper />)
 ];
 
 interface MenuRoute {

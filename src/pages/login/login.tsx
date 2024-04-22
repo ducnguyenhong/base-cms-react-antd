@@ -1,7 +1,8 @@
 import { Button, Form, Input } from 'antd';
 import { useCallback } from 'react';
+import { Helmet } from 'react-helmet';
 import { Navigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import ImgIntro from 'src/assets/login-intro.png';
 import Logo from 'src/assets/logo.png';
 import { useMutateLogin } from 'src/services/auth.service';
@@ -15,13 +16,15 @@ type FieldType = {
 
 const Login: React.FC = () => {
   const token = useRecoilValue(tokenState);
+  const setToken = useSetRecoilState(tokenState);
   const { mutate: loginMutate } = useMutateLogin();
 
   const onFinish = useCallback(
     (values: FieldType) => {
-      loginMutate(values);
+      // loginMutate(values);
+      setToken('token');
     },
-    [loginMutate]
+    [loginMutate, setToken]
   );
 
   if (token) {
@@ -30,6 +33,9 @@ const Login: React.FC = () => {
 
   return (
     <div className="flex h-screen">
+      <Helmet>
+        <title>Đăng nhập | {WEBSITE_NAME}</title>
+      </Helmet>
       <div className="hidden lg:block w-[35%] h-full">
         <img src={ImgIntro} alt="login" className="h-full" />
       </div>

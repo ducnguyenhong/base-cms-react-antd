@@ -5,8 +5,7 @@ import { HiChevronDoubleLeft, HiChevronDoubleRight } from 'react-icons/hi';
 import { Link, Navigate, Outlet } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import Logo from 'src/assets/logo.png';
-import { ErrorScreen, LoadingScreen } from 'src/components/effect-screen';
-import { useQueryUserInfo } from 'src/services/auth.service';
+import { ErrorScreen } from 'src/components/effect-screen';
 import { tokenState } from 'src/states/common';
 import { WEBSITE_NAME } from 'src/utils/resource';
 import packageJson from '../../package.json';
@@ -23,7 +22,7 @@ const MainLayout: React.FC = () => {
     token: { colorBgContainer, borderRadiusLG }
   } = theme.useToken();
   const token = useRecoilValue(tokenState);
-  const { isLoading, error } = useQueryUserInfo();
+  // const { isLoading, error } = useQueryUserInfo();
   const currentRoute = useGetCurrentRoute();
   const { section } = currentRoute || {};
 
@@ -31,13 +30,13 @@ const MainLayout: React.FC = () => {
     return <Navigate to="/login" />;
   }
 
-  if (isLoading) {
-    return <LoadingScreen className="h-screen" />;
-  }
+  // if (isLoading) {
+  //   return <LoadingScreen className="h-screen" />;
+  // }
 
-  if (error) {
-    return <ErrorScreen className="h-screen" message={error.message} />;
-  }
+  // if (error) {
+  //   return <ErrorScreen className="h-screen" message={error.message} />;
+  // }
 
   return (
     <Layout className="min-h-screen">
